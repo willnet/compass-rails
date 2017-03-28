@@ -92,6 +92,9 @@ module CompassRails
       compass_config = app.config.compass
 
       sass_config.load_paths.concat(compass_config.sass_load_paths)
+      app.config.assets.paths.concat(compass_config.sass_load_paths.select do |path|
+        path.is_a? Sass::Importers::Filesystem
+      end.map(&:to_s))
 
       { :output_style => :style,
         :line_comments => :line_comments,
